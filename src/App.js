@@ -18,7 +18,6 @@ function App() {
       <Main>
         <Specials />
         <Testimonials />
-        {/* You can add your reservation section here later */}
       </Main>
       <Footer />
     </div>

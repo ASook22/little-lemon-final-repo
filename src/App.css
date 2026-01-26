@@ -1,26 +1,6 @@
-/* src/App.css */
+/* src/App.css - Updated with better visibility for 4K (using #e5e5e5 for placeholders) */
 
-/* ============================================
-   CSS Variables (makes color/font changes easy)
-   ============================================ */
-:root {
-  --primary: #f4ce14;       /* Bright lemon yellow – main call-to-action */
-  --primary-dark: #ee9c0d;  /* Hover/darken variant */
-  --dark: #333333;          /* Almost black for text */
-  --gray: #495e57;          /* Dark green-gray from Little Lemon style */
-  --light-gray: #e0e0e0;
-  --white: #ffffff;
-  --off-white: #f9f9f9;
-
-  --font-heading: "Markazi Text", serif;   /* Elegant serif for titles */
-  --font-body: "Karla", sans-serif;        /* Clean sans-serif for text */
-
-  --transition: all 0.25s ease;
-  --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.08);
-  --radius: 12px;
-}
-
-/* Reset / base */
+/* Reset & Base */
 * {
   margin: 0;
   padding: 0;
@@ -28,178 +8,240 @@
 }
 
 body {
-  font-family: var(--font-body);
-  color: var(--dark);
-  background-color: var(--off-white);
+  font-family: 'Karla', sans-serif;
+  color: #333333;
+  background-color: #ffffff;
   line-height: 1.6;
 }
 
-/* App wrapper – full height column layout */
+/* Full-page flex layout */
 .app-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* ============================================
-   HEADER
-   ============================================ */
-header {
-  background-color: var(--white);
-  box-shadow: var(--shadow-sm);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 1.2rem 5%;
-}
-
-header h1 {
-  font-family: var(--font-heading);
-  font-size: 2.8rem;
-  color: var(--gray);
+/* Header / Branding */
+.header {
   text-align: center;
-  letter-spacing: 1px;
+  padding: 2rem 1rem;
+  background-color: #ffffff;
 }
 
-/* ============================================
-   NAVIGATION
-   ============================================ */
-nav {
-  background-color: var(--gray);
-  padding: 1rem 5%;
+.header h1 {
+  font-family: 'Markazi Text', serif;
+  font-size: 3.5rem;
+  color: #495E57;
 }
 
-nav ul {
+.header p {
+  font-size: 1.4rem;
+  color: #495E57;
+  font-weight: 500;
+}
+
+/* Navigation */
+.nav {
+  background-color: #495E57;
+  padding: 1rem;
+}
+
+.nav-list {
   list-style: none;
   display: flex;
   justify-content: center;
-  gap: 2.5rem;
-  flex-wrap: wrap;
+  gap: 2rem;
 }
 
-nav a {
-  color: var(--white);
+.nav-list a {
+  color: white;
   text-decoration: none;
   font-weight: 600;
   font-size: 1.1rem;
-  transition: var(--transition);
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
 }
 
-nav a:hover,
-nav a:focus {
-  background-color: var(--primary);
-  color: var(--dark);
+.nav-list a:hover {
+  color: #F4CE14;
 }
 
-/* ============================================
-   MAIN CONTENT
-   ============================================ */
-main {
+/* Hero Section */
+.hero {
+  background-color: #495E57;
+  color: white;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hero-content {
   flex: 1;
-  padding: 2.5rem 5%;
-  max-width: 1400px;
+  min-width: 300px;
+}
+
+.hero h1 {
+  font-family: 'Markazi Text', serif;
+  font-size: 4.5rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.hero h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  background-color: #F4CE14;
+  color: #333;
+  font-weight: bold;
+  padding: 0.9rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+  background-color: #e0b50c;
+  transform: translateY(-2px);
+}
+
+/* Hero image placeholder */
+.hero-image-placeholder {
+  flex: 1;
+  min-width: 300px;
+  height: 350px;
+  background-color: #e5e5e5;          /* ← updated visibility color */
+  border: 1px solid #d0d0d0;          /* helps define edge on high-res screens */
+  border-radius: 16px;
+}
+
+/* Main content area */
+.main-content {
+  padding: 3rem 1.5rem;
+  max-width: 1200px;
   margin: 0 auto;
   width: 100%;
 }
 
-section {
-  margin-bottom: 4rem;
-}
-
 h2 {
-  font-family: var(--font-heading);
-  font-size: 2.8rem;
-  color: var(--gray);
-  margin-bottom: 1.2rem;
+  font-family: 'Markazi Text', serif;
+  font-size: 3rem;
+  color: #495E57;
   text-align: center;
+  margin-bottom: 2rem;
 }
 
-/* Simple card style (good for specials, testimonials, etc.) */
-.card {
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-sm);
-  padding: 1.5rem;
-  transition: var(--transition);
+/* Grids for specials & testimonials */
+.specials-grid,
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+.menu-card,
+.testimonial-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;           /* visible but subtle border */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Buttons – very common in Little Lemon (Reserve a Table, etc.) */
-.btn {
-  display: inline-block;
-  background-color: var(--primary);
-  color: var(--dark);
-  font-weight: bold;
-  padding: 0.9rem 1.8rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: var(--transition);
-  text-decoration: none;
+.menu-card:hover,
+.testimonial-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
-.btn:hover,
-.btn:focus {
-  background-color: var(--primary-dark);
-  transform: translateY(-2px);
+/* Image / avatar placeholders */
+.card-image-placeholder,
+.avatar-placeholder {
+  height: 200px;
+  background-color: #e5e5e5;           /* ← updated visibility color */
+  border-bottom: 1px solid #d0d0d0;    /* separates image area clearly */
+  background-size: cover;
+  background-position: center;
 }
 
-/* ============================================
-   FOOTER
-   ============================================ */
-footer {
-  background-color: var(--gray);
-  color: var(--white);
+/* Card text */
+.menu-card h3,
+.testimonial-card h3 {
+  font-family: 'Markazi Text', serif;
+  font-size: 2rem;
+  color: #495E57;
+  padding: 1.2rem 1.5rem 0.4rem;
+}
+
+.menu-card p,
+.testimonial-card p {
+  padding: 0 1.5rem 1.2rem;
+  color: #555;
+  font-size: 1.05rem;
+}
+
+.price {
+  display: block;
+  padding: 0 1.5rem 1.5rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #F4CE14;
+}
+
+/* Footer */
+.footer {
+  background-color: #495E57;
+  color: white;
   text-align: center;
-  padding: 2.5rem 5%;
+  padding: 2rem;
   margin-top: auto;
 }
 
-footer p {
-  margin-bottom: 0.8rem;
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-footer a {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 500;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-/* ============================================
-   Responsive (mobile-first)
-   ============================================ */
+/* Mobile adjustments */
 @media (max-width: 768px) {
-  header h1 {
-    font-size: 2.4rem;
-  }
-
-  nav ul {
+  .hero {
     flex-direction: column;
-    gap: 1.2rem;
+    text-align: center;
   }
 
-  main {
-    padding: 1.8rem 4%;
+  .hero h1 {
+    font-size: 3.5rem;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 1rem;
   }
 
   h2 {
-    font-size: 2.4rem;
+    font-size: 2.5rem;
   }
-}
 
-@media (max-width: 480px) {
-  header h1 {
-    font-size: 2rem;
+  .specials-grid,
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .main-content {
+    padding: 2rem 1rem;
   }
 }
