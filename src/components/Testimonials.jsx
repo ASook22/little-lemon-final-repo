@@ -1,8 +1,8 @@
 // src/components/Testimonials.js
-function Testimonials() {
+export default function Testimonials() {
   return (
-    <section className="testimonials-section">
-      <h2>What Our Customers Say!</h2>
+    <section className="testimonials-section" id="testimonials">
+      <h2>Recent Reviews</h2>
       <div className="testimonials-grid">
         <article className="testimonial-card">
           <div className="avatar-placeholder"></div>
@@ -25,5 +25,3 @@ function Testimonials() {
     </section>
   );
 }
-
-export default Testimonials;

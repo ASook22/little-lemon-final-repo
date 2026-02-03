@@ -1,13 +1,16 @@
-// src/components/Header.js
-function Header() {
+// src/components/Header.jsx
+import logo from "../assets/Logo.svg";
+
+export default function Header() {
   return (
     <header className="header">
       <div className="container">
-        <h1>Little Lemon</h1>
-        <p>Chicago</p>
+        <img 
+          src={logo}
+          alt="Little Lemon Logo" 
+          className="header-logo"
+        />
       </div>
     </header>
   );
 }
-
-export default Header;

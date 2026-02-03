@@ -1,12 +1,10 @@
-function Reservations() {
+// src/components/Reservations.jsx
+import ReservationForm from "./ReservationForm";
+
+export default function Reservations() {
   return (
-    <section className="main-content">
-      <h2>Reservations</h2>
-      <p style={{ textAlign: 'center' }}>
-        Reservation page coming soon.
-      </p>
+    <section className="reservations-section">
+      <ReservationForm />
     </section>
   );
 }
-
-export default Reservations;

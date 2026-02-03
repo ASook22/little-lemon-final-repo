@@ -1,17 +1,27 @@
-/* src/App.css - Updated with better visibility for 4K (using #e5e5e5 for placeholders) */
-
-/* Reset & Base */
+/* ==========================================
+   Reset & Global
+========================================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
   font-family: 'Karla', sans-serif;
-  color: #333333;
   background-color: #ffffff;
+  color: #333333;
   line-height: 1.6;
+  scroll-behavior: smooth;
+}
+
+#root {
+  width: 100%;
 }
 
 /* Full-page flex layout */
@@ -21,115 +31,285 @@ body {
   flex-direction: column;
 }
 
-/* Header / Branding */
+/* Header (top row - white with centered logo) */
 .header {
+  background: white;
   text-align: center;
-  padding: 2rem 1rem;
-  background-color: #ffffff;
-}
-
-.header h1 {
-  font-family: 'Markazi Text', serif;
-  font-size: 3.5rem;
-  color: #495E57;
-}
-
-.header p {
-  font-size: 1.4rem;
-  color: #495E57;
-  font-weight: 500;
-}
-
-/* Navigation */
-.nav {
-  background-color: #495E57;
   padding: 1rem;
 }
 
+.header-logo {
+  width: 220px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Navigation (bottom row on desktop, combined on mobile) */
+.nav {
+  background: #495E57;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Desktop: green bar with centered nav items */
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Nav links (desktop) */
 .nav-list {
   list-style: none;
   display: flex;
+  gap: 2.5rem;
+  margin: 0;
   justify-content: center;
-  gap: 2rem;
+  padding: 10px;
 }
 
 .nav-list a {
   color: white;
   text-decoration: none;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
+  transition: color 0.3s ease;
 }
 
-.nav-list a:hover {
+.nav-list a:hover,
+.nav-list a:focus {
   color: #F4CE14;
+}
+
+/* Hamburger menu (only visible on mobile) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.hamburger-line {
+  width: 28px;
+  height: 3px;
+  background: #495E57; /* green lines */
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger.open .hamburger-line:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+}
+
+.hamburger.open .hamburger-line:nth-child(2) {
+  transform: scaleX(0);
+  opacity: 0;
+}
+
+.hamburger.open .hamburger-line:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg);
+}
+
+.nav-logo{
+  display: none;
+}
+
+/* Mobile: combine header + nav into one white row */
+@media (max-width: 768px) {
+  /* Hide separate header on mobile */
+  .header {
+    display: none;
+  }
+
+  /* Make nav bar white and single row */
+  .nav {
+    background: white;
+  }
+
+  .nav-bar {
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  /* Show hamburger on left */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Center logo in mobile nav bar */
+  .nav-logo {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .nav-logo img {
+    width: 180px;
+    height: auto;
+  }
+
+  /* Mobile dropdown menu */
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #495E57;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    
+  }
+
+  .nav li {
+    text-align: center;
+  }
+
+  .nav-list.open {
+    display: flex;
+  }
+
+  .nav-list a {
+    font-size: 1.3rem;
+    text-align: center;
+    color: white;
+    justify-content: center;
+  }
 }
 
 /* Hero Section */
 .hero {
   background-color: #495E57;
   color: white;
-  padding: 4rem 2rem;
+  padding: 2.5rem 5% 3.5rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 3rem;
+  gap: 2.5rem;
   align-items: center;
   justify-content: space-between;
+  min-height: 60vh;
+  border-radius: 16px;
+  margin-bottom: 50px;
 }
 
 .hero-content {
-  flex: 1;
-  min-width: 300px;
+  flex: 1 1 45%;
+  min-width: 320px;
+  max-width: 1200px;
+  text-align: center;
 }
 
 .hero h1 {
   font-family: 'Markazi Text', serif;
-  font-size: 4.5rem;
+  font-size: 4rem;
   line-height: 1;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.3rem;
+  font-weight: 500;
 }
 
 .hero h2 {
   font-size: 2.2rem;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.2rem;
+  opacity: 0.9;
+  font-weight: 400;
+  color: #F4CE14;
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   max-width: 500px;
-  margin-bottom: 2rem;
+  margin: 0 auto 1.5rem;
 }
 
 .btn {
   background-color: #F4CE14;
   color: #333;
   font-weight: bold;
-  padding: 0.9rem 2rem;
+  padding: 1rem 2.2rem;
   border: none;
   border-radius: 12px;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(244, 206, 20, 0.3);
+  display: inline-block;
+  margin: 0 auto;
 }
 
-.btn:hover {
+.btn:hover,
+.btn:focus {
   background-color: #e0b50c;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(244, 206, 20, 0.5);
 }
 
-/* Hero image placeholder */
-.hero-image-placeholder {
-  flex: 1;
-  min-width: 300px;
-  height: 350px;
-  background-color: #e5e5e5;          /* ← updated visibility color */
-  border: 1px solid #d0d0d0;          /* helps define edge on high-res screens */
+.hero-image {
+  flex: 1 1 45%;
+  min-width: 320px;
+  max-width: 600px;
+  height: 500px;
+  overflow: hidden;
   border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
 
-/* Main content area */
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Responsive Hero */
+@media (max-width: 1024px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 6%;
+    gap: 2rem;
+  }
+
+  .hero-image {
+    height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 1.8rem 5%;
+    min-height: auto;
+  }
+
+  .hero-image {
+    height: 240px;
+  }
+
+  .hero h1 {
+    font-size: 3.2rem;
+  }
+
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+}
+
+.specials-section{
+    margin-bottom: 50px;
+}
+
+/* Main / Content */
 .main-content {
   padding: 3rem 1.5rem;
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
   width: 100%;
 }
@@ -142,7 +322,7 @@ h2 {
   margin-bottom: 2rem;
 }
 
-/* Grids for specials & testimonials */
+/* Grids */
 .specials-grid,
 .testimonials-grid {
   display: grid;
@@ -151,10 +331,11 @@ h2 {
   margin-top: 2.5rem;
 }
 
+/* Cards */
 .menu-card,
 .testimonial-card {
   background: #ffffff;
-  border: 1px solid #e0e0e0;           /* visible but subtle border */
+  border: 1px solid #e0e0e0;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
@@ -167,14 +348,20 @@ h2 {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Image / avatar placeholders */
-.card-image-placeholder,
-.avatar-placeholder {
+/* Card images */
+.card-image {
+  width: 100%;
   height: 200px;
-  background-color: #e5e5e5;           /* ← updated visibility color */
-  border-bottom: 1px solid #d0d0d0;    /* separates image area clearly */
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
+  object-position: center;
+  border-bottom: 1px solid #d0d0d0;
+  border-radius: 12px 12px 0 0;
+  display: block;
+}
+
+.menu-card:hover .card-image {
+  transform: scale(1.03);
+  transition: transform 0.3s ease;
 }
 
 /* Card text */
@@ -215,33 +402,406 @@ h2 {
   margin: 0 auto;
 }
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .hero {
+/* ==========================================
+   Reservations Page & Form
+========================================== */
+
+/* Page wrapper – white background, no top gap */
+.reservations-section {
+  background: white;
+  min-height: calc(100vh - 120px);
+  padding-top: 2.5rem;
+  margin-top: 0;
+}
+
+.reservations-section h2 {
+  margin-top: 0;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+/* Form container – light gray #D9D9D9, wider */
+.reservation-form {
+  max-width: 1200px;
+  margin: 1rem auto 3rem;
+  border: 1px solid #D9D9D9;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  overflow: hidden;
+  padding-top: 0;
+  padding: 0 2.5rem 2rem 2.5rem;
+}
+
+/* Uniform form elements – text inputs & textarea (no arrow) */
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group textarea {
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  background: white;
+  transition: border-color 0.3s ease;
+  appearance: none;
+  background-image: none !important;
+}
+
+/* Selects only – keep down arrow */
+.form-group select {
+  width: 100%;
+  padding: 0.9rem 2.5rem 0.9rem 0.9rem;
+  font-size: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9l-4-4h8z'/%3E%3C/svg%3E") no-repeat right 0.8rem center;
+  background-size: 12px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.form-group select:focus,
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #F4CE14;
+  box-shadow: 0 0 0 3px rgba(244, 206, 20, 0.2);
+}
+
+/* Notes textarea – identical to first/last name inputs */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+  width: 100%;
+  padding: 0.9rem;
+  font-size: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  background: white;
+  transition: border-color 0.3s ease;
+  appearance: none;
+  background-image: none !important;
+}
+
+/* Date + Time row – side by side on desktop */
+.date-time-row {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.date-time-row .form-section {
+  flex: 1;
+  min-width: 45%;
+}
+
+/* DatePicker – full width + yellow selected day */
+.date-section .react-datepicker {
+  width: 100% !important;
+  max-width: 100% !important;
+  border: 1px solid #ccc !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
+  margin: 0 auto !important;
+}
+
+.date-section .react-datepicker__month-container {
+  float: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+}
+
+.date-section .react-datepicker__month {
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected,
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--keyboard-selected:hover {
+  background-color: #F4CE14 !important;
+  color: #333 !important;
+  border-radius: 50% !important;
+  font-weight: bold !important;
+}
+
+.react-datepicker__header {
+  background-color: #495E57 !important;
+  color: white !important;
+  border-bottom: none !important;
+}
+
+.react-datepicker__current-month {
+  text-align: center !important;
+  color: white !important;
+}
+
+/* Guests – side by side on desktop */
+.guests-row {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.guests-row .form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Time buttons */
+.time-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 40px;
+  row-gap: 15px;
+}
+
+.time-btn {
+  padding: 1rem 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: all 0.2s;
+}
+
+.time-btn.selected,
+.time-btn:hover {
+  background: #F4CE14;
+  border-color: #F4CE14;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Confirm button – centered */
+.confirm-btn {
+  background-color: #F4CE14;
+  color: #333;
+  font-weight: bold;
+  padding: 1rem 2.2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(244, 206, 20, 0.3);
+  display: block;
+  margin: 2rem auto 0;
+  width: fit-content;
+}
+
+.confirm-btn:hover {
+  background-color: #e0b50c;
+  transform: translateY(-3px);
+}
+
+/* Confirmation message – old simple style */
+.reservation-success {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #e8f5e9;
+  border-radius: 16px;
+  text-align: center;
+  color: #2e7d32;
+}
+
+.reservation-success h3 {
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.reservation-success p {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+/* About Section – mirrors Hero layout */
+.about {
+  background-color: white;
+  color: #495E57;
+  padding: 2.5rem 5% 3.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 55vh;
+ border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  margin-bottom: 50px;
+}
+
+.about-content {
+  flex: 1 1 45%;
+  min-width: 320px;
+  max-width: 600px;
+  text-align: center;
+}
+
+.about h2 {
+  font-family: 'Markazi Text', serif;
+  font-size: 3rem;
+  line-height: 1;
+  margin: 0 0 0.3rem;
+  font-weight: 500;
+  color: white;
+}
+
+.about p {
+  padding-top: 1rem;
+  font-size: 1.15rem;
+  max-width: 500px;
+  margin: 0 auto 1.5rem;
+}
+
+.about-image {
+  flex: 1 1 45%;
+  min-width: 320px;
+  max-width: 600px;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.about-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #495E57; /* your green */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background-color: #3a4c45; /* slightly darker green */
+  transform: translateY(-5px);
+}
+
+/* ==========================================
+   Media Queries – all together
+========================================== */
+
+/* Responsive Hero & About */
+@media (max-width: 1024px) {
+  .hero,
+  .about {
     flex-direction: column;
     text-align: center;
+    padding: 2rem 6%;
+    gap: 2rem;
   }
 
-  .hero h1 {
-    font-size: 3.5rem;
+  .hero-image,
+  .about-image {
+    height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero,
+  .about {
+    padding: 1.8rem 5%;
+    min-height: auto;
   }
 
-  .nav-list {
+  .hero-image,
+  .about-image {
+    height: 240px;
+  }
+
+  .hero h1,
+  .about h2 {
+    font-size: 3.2rem;
+  }
+
+  .hero h2,
+  .about h2 {
+    margin-bottom: 0.8rem;
+  }
+
+  .hero p,
+  .about p {
+    margin: 0 auto 1rem;
+  }
+
+ .back-to-top {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* Reservations form responsive */
+@media (max-width: 1024px) {
+  .date-time-row {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .date-time-row .form-section {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .reservation-form {
+    margin: 0.5rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .form-section {
+    padding: 1.2rem 1.2rem;
+  }
+
+  .guests-row,
+  .contact-row {
     flex-direction: column;
     gap: 1rem;
   }
 
-  h2 {
-    font-size: 2.5rem;
+  .time-buttons {
+    flex-direction: column;
   }
 
-  .specials-grid,
-  .testimonials-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .main-content {
-    padding: 2rem 1rem;
+  .time-btn {
+    width: 100%;
   }
 }
+
