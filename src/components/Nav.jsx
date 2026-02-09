@@ -26,7 +26,7 @@ export default function Nav() {
 
         {/* Logo in center */}
         <Link to="/" className="nav-logo" onClick={closeMenu}>
-          <img src={logo} alt="Little Lemon Logo" />
+          <img src={logo} alt="Little Lemon Logo Nav" />
         </Link>
 
         {/* Empty space on right for balance (optional) */}

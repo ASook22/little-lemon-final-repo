@@ -3,7 +3,7 @@ import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-export default function ReservationForm() {
+export default function ReservationForm({ availableTimes, dispatchOnDateChange,submitForm}) {
   const [formData, setFormData] = useState({
     date: new Date(),
     time: '',
@@ -17,60 +17,76 @@ export default function ReservationForm() {
     phone: '',
   });
 
-  const [submitted, setSubmitted] = useState(false);
-
-  const availableTimes = [
-    '17:00', '17:30', '18:00', '18:30', '19:00', '19:30',
-    '20:00', '20:30', '21:00', '21:30', '22:00',
-  ];
-
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const updatedValue = (name === 'adults' || name === 'children') ? parseInt(value, 10) : value;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: updatedValue,
     }));
+
   };
 
   const handleDateChange = (date) => {
+    // ... (this function is fine) ...
+    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
     setFormData((prev) => ({
       ...prev,
-      date,
+      date: dateOnly,
     }));
+
+    dispatchOnDateChange({ type: 'UPDATE_TIMES', payload: dateOnly });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.time) {
-      alert('Please select a time');
-      return;
-    }
-    console.log('Reservation submitted:', formData);
-    setSubmitted(true);
-  };
-
-  if (submitted) {
-    const dateStr = formData.date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-
-    const totalGuests = formData.adults + formData.children;
-    const guestText = totalGuests === 1 ? 'guest' : 'guests';
-    const nameText = `${formData.title.toUpperCase()} ${formData.firstName.toUpperCase()} ${formData.lastName.toUpperCase()}`;
-
-    return (
-      <div className="reservation-success">
-        <h3>Reservation Confirmed!</h3>
-        <p>Thank you! We look forward to seeing you.</p>
-        <p className="confirmation-message">
-          Thank you for your confirmation, <strong>{nameText}</strong> we look forward to having your party of <strong>{totalGuests} {guestText}</strong> on <strong>{dateStr}</strong> at <strong>{formData.time}</strong> at Little Lemon Chicago.
-        </p>
-      </div>
-    );
+const handleSubmit = (e) => {
+  e.preventDefault();
+  
+  if (!formData.time) {
+    alert('Please select a time');
+    return;
   }
+
+  // 1. Convert the 24-hour time string (e.g., "17:00") to 12-hour format (e.g., "5:00 PM")
+  const [hours, minutes] = formData.time.split(':');
+  const dummyDate = new Date();
+  dummyDate.setHours(parseInt(hours, 10), parseInt(minutes, 10));
+  
+  const formattedTime = dummyDate.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+
+  // 2. Prepare the final data object with the formatted time
+  const finalFormData = {
+    ...formData,
+    time: formattedTime,
+  };
+
+  const submissionTime = new Date().toLocaleString();
+  const bookedDate = formData.date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  console.group('🍋 Little Lemon Booking Confirmation');
+  console.log('Submitted At:', submissionTime);
+  console.log('Booked Date:', bookedDate);
+  console.log('Booked Time:', formattedTime); // Log the pretty version
+  console.log('Guests:', `${formData.adults} adults + ${formData.children} children`);
+  console.log('Name:', `${formData.title} ${formData.firstName} ${formData.lastName}`);
+  console.log('Email:', formData.email);
+  console.log('Phone:', formData.phone);
+  console.log('Notes:', formData.notes || '(none)');
+  console.groupEnd();
+
+  // 3. Submit the updated data so the ConfirmedBooking page receives the 12-hour format
+  submitForm(finalFormData);
+};
 
   return (
     <form className="reservation-form" onSubmit={handleSubmit}>
@@ -102,43 +118,62 @@ export default function ReservationForm() {
         </div>
       </div>
 
-     {/* Date + Time – side by side */}
-<div className="date-time-row">
-  {/* Date */}
-  <div className="form-section date-section">
-    <h2>DATE</h2>
-    <DatePicker
-      selected={formData.date}
-      onChange={handleDateChange}
-      dateFormat="MMMM d, yyyy"
-      minDate={new Date()}
-      placeholderText="Select date"
-      className="form-input calendar-input"
-      calendarClassName="big-calendar"
-      required
-      inline
-      showFullMonthYearPicker={false}      // prevents showing adjacent months
-      fixedHeight={false}                  // removes the forced 6-week height
-    />
-  </div>
+      {/* Date + Time – side by side */}
+      <div className="date-time-row">
+        {/* Date */}
+        <div className="form-section date-section">
+          <h2>DATE</h2>
+          <DatePicker
+            selected={formData.date}
+            onChange={handleDateChange}
+            dateFormat="MMMM d, yyyy"
+            minDate={new Date()}
+            placeholderText="Select date"
+            className="form-input calendar-input"
+            calendarClassName="big-calendar"
+            required
+            inline
+            showFullMonthYearPicker={false}
+            fixedHeight={false}
+            aria-labelledby="date-label"
+          />
+        </div>
 
-  {/* Time */}
-  <div className="form-section time-section">
-    <h2>TIME</h2>
-    <div className="time-buttons">
-      {availableTimes.map((t) => (
-        <button
-          key={t}
-          type="button"
-          className={`time-btn ${formData.time === t ? 'selected' : ''}`}
-          onClick={() => setFormData((prev) => ({ ...prev, time: t }))}
-        >
-          {t}
-        </button>
-      ))}
-    </div>
-  </div>
-</div>
+      {/* Time */}
+      <div className="form-section time-section">
+        <h2>TIME</h2>
+        <div className="time-buttons">
+          {availableTimes.map((t) => {
+            // Convert "17:00" to "5:00 PM" for the button label
+            const [hours, minutes] = t.split(':');
+            const timeObj = new Date();
+            timeObj.setHours(parseInt(hours, 10), parseInt(minutes, 10));
+            
+            const displayTime = timeObj.toLocaleTimeString('en-US', {
+              hour: 'numeric',
+              minute: '2-digit',
+              hour12: true,
+            });
+
+            return (
+              <button
+                key={t}
+                type="button"
+                className={`time-btn ${formData.time === t ? 'selected' : ''}`}
+                // We still store the 24h format in state for easy tracking
+                onClick={() => setFormData((prev) => ({ ...prev, time: t }))}
+                aria-pressed={formData.time === t}
+                aria-label={`Select time ${displayTime}`}
+              >
+                {displayTime}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+
+      </div>
 
       {/* Notes */}
       <div className="form-section">
@@ -222,9 +257,13 @@ export default function ReservationForm() {
       </div>
 
       {/* Submit */}
-      <button type="submit" className="confirm-btn">
-        Confirm Reservation
-      </button>
+      <button
+          type="submit"
+          className="confirm-btn"
+          aria-label="Confirm your reservation details"
+        >
+          Confirm Reservation
+        </button>
     </form>
   );
 }
