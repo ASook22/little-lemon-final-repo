@@ -712,6 +712,61 @@ textarea {
   transform: translateY(-5px);
 }
 
+.form-input.invalid,
+.time-btn.invalid,
+select.invalid {
+  border: 2px solid #d32f2f !important;
+  background-color: #ffebee;
+}
+
+.error-message {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Completely remove the default fieldset border and padding */
+fieldset {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 0 1.5rem 0; /* optional: keep some vertical spacing */
+}
+
+/* Hide the legend visually but keep it for screen readers */
+fieldset legend {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* Optional: If you want a subtle replacement divider instead of border */
+.form-section {
+  border-bottom: 1px solid #e0e0e0; /* light gray line */
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-section:last-child {
+  border-bottom: none;
+}
+
 /* ==========================================
    Media Queries – all together
 ========================================== */
