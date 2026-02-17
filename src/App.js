@@ -1,6 +1,5 @@
-//src/App.js
-
-import { Routes, Route } from 'react-router-dom';
+// src/App.js
+import { Routes, Route, useNavigate } from 'react-router-dom'; // grouped imports
 import Header from './components/Header';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
@@ -10,56 +9,56 @@ import Testimonials from './components/Testimonials';
 import Reservations from './components/Reservations';
 import About from './components/About';
 import Footer from './components/Footer';
-import ConfirmedBooking from "./components/ConfirmedBooking";
-import { useNavigate } from "react-router-dom";
-import { submitAPI } from './api';   
+import ConfirmedBooking from './components/ConfirmedBooking';
+import { submitAPI } from './api';
 
+// Main app component with routing and booking submission logic
 export default function App() {
   const navigate = useNavigate();
 
- const submitForm = (formData) => {
-  const success = submitAPI(formData);
-  if (success) {
-    navigate("/confirmed", { state: formData });
-  }
-};
+  // Handles form submission → calls API → navigates on success
+  const submitForm = (formData) => {
+    const success = submitAPI(formData);
+    if (success) {
+      navigate('/confirmed', { state: formData });
+    } else {
+      // Optional: add error handling (not required but good practice)
+      alert('Failed to submit reservation. Please try again.');
+    }
+  };
 
   return (
     <div className="app-wrapper">
       <Header />
       <Nav />
 
-      <Routes>
-        {/* HOME */}
-        <Route
-          path="/"
-          element={
-            <>
+      {/* Main content landmark – improves accessibility */}
+      <main role="main">
+        <Routes>
+          {/* Home route */}
+          <Route
+            path="/"
+            element={
               <Main>
                 <Hero />
                 <Specials />
                 <About />
                 <Testimonials />
               </Main>
-            </>
-          }
-        />
+            }
+          />
 
-        {/* RESERVATIONS */}
-        <Route
-          path="/reservations"
-          element={
-            <>
-              <Reservations submitForm={submitForm}/>
-            </>
-          }
-        />
-        <Route 
-          path="/confirmed" 
-          element={<ConfirmedBooking/>} 
-        />
+          {/* Reservations route – passes submit handler */}
+          <Route
+            path="/reservations"
+            element={<Reservations submitForm={submitForm} />}
+          />
 
-      </Routes>
+          {/* Confirmation route */}
+          <Route path="/confirmed" element={<ConfirmedBooking />} />
+        </Routes>
+      </main>
+
       <Footer />
     </div>
   );

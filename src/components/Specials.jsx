@@ -3,6 +3,7 @@ import greekSalad from "../assets/greek salad.jpg";
 import bruschetta from "../assets/bruchetta.svg";
 import lemonDessert from "../assets/lemon dessert.jpg";
 
+// Specials section – displays this week's featured menu items
 export default function Specials() {
   return (
     <section className="specials-section" id="menu">

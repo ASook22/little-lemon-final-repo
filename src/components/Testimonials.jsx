@@ -1,4 +1,6 @@
-// src/components/Testimonials.js
+// src/components/Testimonials.jsx
+
+// Testimonials section – displays recent customer reviews
 export default function Testimonials() {
   return (
     <section className="testimonials-section" id="testimonials">

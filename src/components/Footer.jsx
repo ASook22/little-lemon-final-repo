@@ -1,4 +1,6 @@
 // src/components/Footer.jsx
+
+// Simple footer with copyright and location
 export default function Footer() {
   return (
     <footer className="footer">

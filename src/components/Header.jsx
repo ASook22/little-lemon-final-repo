@@ -1,6 +1,7 @@
 // src/components/Header.jsx
 import logo from "../assets/Logo.svg";
 
+// Header with centered logo
 export default function Header() {
   return (
     <header className="header">
