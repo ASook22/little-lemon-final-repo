@@ -21,4 +21,4 @@ A modern, responsive website for Little Lemon, a family-owned Mediterranean rest
 ## Setup & Running Locally
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/little-lemon.git
+   git clone https://github.com/ASook22/little-lemon-final-repo.git
